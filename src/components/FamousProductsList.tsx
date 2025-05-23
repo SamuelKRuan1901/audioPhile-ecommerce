@@ -15,7 +15,7 @@ const FamousProductsList = () => {
     {
       id: 2,
       name: 'Speakers',
-      path: '/Speakers',
+      path: '/speakers',
       image: SpeakerImg
     },
     {

@@ -47,6 +47,7 @@ const ZX9Speaker = () => {
             backgroundColor: '#d87d4a',
             ':hover': { backgroundColor: 'rgba(172, 126, 80, 0.53)' }
           }}
+          href='/zx9-speaker'
         >
           See Product
         </Button>

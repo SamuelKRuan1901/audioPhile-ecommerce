@@ -9,13 +9,13 @@ const PageTitle = ({ title }: { title: string }) => {
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 4,
-        paddingTop: 20,
         paddingBottom: { xs: 4, md: 8 },
         backgroundColor: '#000000',
         color: '#ffffff',
         fontWeight: 700,
         fontSize: { xs: 24, md: 32 }
       }}
+      paddingTop={title === '' ? 10 : 20}
     >
       {title}
     </Stack>

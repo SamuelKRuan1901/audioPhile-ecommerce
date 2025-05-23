@@ -43,6 +43,7 @@ const YX1Earphones = () => {
             color: '#d87d4a',
             ':hover': { backgroundColor: '#d87d4a', color: '#ffffff' }
           }}
+          href={'/yx1-earphones'}
         >
           See Product
         </Button>

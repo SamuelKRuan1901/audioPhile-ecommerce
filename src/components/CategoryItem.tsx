@@ -24,6 +24,7 @@ const CategoryItem = ({
       <Image
         src={image}
         alt={name}
+        priority
         width={200}
         height={100}
         className='w-full mx-auto z-1'
