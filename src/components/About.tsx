@@ -7,7 +7,7 @@ const About = () => {
   return (
     <Stack
       direction={{ xs: 'column-reverse', md: 'row' }}
-      width={{ xs: '100%', md: 800 }}
+      width={{ xs: '100%', md: '80%' }}
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
@@ -23,16 +23,24 @@ const About = () => {
         sx={{
           justifyContent: 'center',
           alignItems: 'center',
-          width: '100%',
+          width: { xs: '100%', md: '40%' },
           padding: 4,
           textAlign: { xs: 'center', md: 'start' }
         }}
       >
-        <Typography variant='h3' fontWeight={600} fontSize={38}>
+        <Typography variant='h3' fontWeight={600} fontSize={42}>
           Bringing you the <span style={{ color: '#d87d4a' }}>best</span> audio
           gear
         </Typography>
-        <Typography variant='body1' sx={{ marginTop: 2, fontSize: 14 }}>
+        <Typography
+          variant='body1'
+          sx={{
+            marginTop: 2,
+            fontSize: 16,
+            color: '#979797',
+            letterSpacing: 1
+          }}
+        >
           Located at the heart of New York City, Audiophile is the premier store
           for high end headphones, earphones, speakers, and audio accessories.
           We have a large showroom and luxury demonstration rooms available for

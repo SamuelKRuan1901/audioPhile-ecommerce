@@ -54,7 +54,9 @@ const ProductItem = ({
         <Typography variant='h4' fontWeight={600}>
           {name}
         </Typography>
-        <Typography variant='body1'>{description}</Typography>
+        <Typography variant='body1' color='#979797' letterSpacing={1}>
+          {description}
+        </Typography>
         <Button
           variant='contained'
           href={href}

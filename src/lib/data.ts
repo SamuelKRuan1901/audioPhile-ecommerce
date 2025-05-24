@@ -10,6 +10,24 @@ import ZX7Img from '@/assets/product-zx7-speaker/desktop/image-product.jpg';
 import ZX7CategoryImg from '@/assets/product-zx7-speaker/desktop/image-category-page-preview.jpg';
 import ZX9Img from '@/assets/product-zx9-speaker/desktop/image-product.jpg';
 import ZX9CategoryImg from '@/assets/product-zx9-speaker/desktop/image-category-page-preview.jpg';
+import YX1Gallery1 from '@/assets/product-yx1-earphones/desktop/image-gallery-1.jpg';
+import YX1Gallery2 from '@/assets/product-yx1-earphones/desktop/image-gallery-2.jpg';
+import YX1Gallery3 from '@/assets/product-yx1-earphones/desktop/image-gallery-3.jpg';
+import XX59Gallery1 from '@/assets/product-xx59-headphones/desktop/image-gallery-1.jpg';
+import XX59Gallery2 from '@/assets/product-xx59-headphones/desktop/image-gallery-2.jpg';
+import XX59Gallery3 from '@/assets/product-xx59-headphones/desktop/image-gallery-3.jpg';
+import XX99MIGallery1 from '@/assets/product-xx99-mark-one-headphones/desktop/image-gallery-1.jpg';
+import XX99MIGallery2 from '@/assets/product-xx99-mark-one-headphones/desktop/image-gallery-2.jpg';
+import XX99MIGallery3 from '@/assets/product-xx99-mark-one-headphones/desktop/image-gallery-3.jpg';
+import XX99MIIGallery1 from '@/assets/product-xx99-mark-two-headphones/desktop/image-gallery-1.jpg';
+import XX99MIIGallery2 from '@/assets/product-xx99-mark-two-headphones/desktop/image-gallery-2.jpg';
+import XX99MIIGallery3 from '@/assets/product-xx99-mark-two-headphones/desktop/image-gallery-3.jpg';
+import ZX7Gallery1 from '@/assets/product-zx7-speaker/desktop/image-gallery-1.jpg';
+import ZX7Gallery2 from '@/assets/product-zx7-speaker/desktop/image-gallery-2.jpg';
+import ZX7Gallery3 from '@/assets/product-zx7-speaker/desktop/image-gallery-3.jpg';
+import ZX9Gallery1 from '@/assets/product-zx9-speaker/desktop/image-gallery-1.jpg';
+import ZX9Gallery2 from '@/assets/product-zx9-speaker/desktop/image-gallery-2.jpg';
+import ZX9Gallery3 from '@/assets/product-zx9-speaker/desktop/image-gallery-3.jpg';
 
 export const data = [
   {
@@ -48,21 +66,9 @@ export const data = [
       }
     ],
     gallery: {
-      first: {
-        mobile: '../assets/product-yx1-earphones/mobile/image-gallery-1.jpg',
-        tablet: '../assets/product-yx1-earphones/tablet/image-gallery-1.jpg',
-        desktop: '../assets/product-yx1-earphones/desktop/image-gallery-1.jpg'
-      },
-      second: {
-        mobile: '../assets/product-yx1-earphones/mobile/image-gallery-2.jpg',
-        tablet: '../assets/product-yx1-earphones/tablet/image-gallery-2.jpg',
-        desktop: '../assets/product-yx1-earphones/desktop/image-gallery-2.jpg'
-      },
-      third: {
-        mobile: '..../assets/product-yx1-earphones/mobile/image-gallery-3.jpg',
-        tablet: '..../assets/product-yx1-earphones/tablet/image-gallery-3.jpg',
-        desktop: '..../assets/product-yx1-earphones/desktop/image-gallery-3.jpg'
-      }
+      first: YX1Gallery1,
+      second: YX1Gallery2,
+      third: YX1Gallery3
     },
     others: [
       {
@@ -114,22 +120,9 @@ export const data = [
       }
     ],
     gallery: {
-      first: {
-        mobile: '.../assets/product-xx59-headphones/mobile/image-gallery-1.jpg',
-        tablet: '.../assets/product-xx59-headphones/tablet/image-gallery-1.jpg',
-        desktop:
-          '.../assets/product-xx59-headphones/desktop/image-gallery-1.jpg'
-      },
-      second: {
-        mobile: '../assets/product-xx59-headphones/mobile/image-gallery-2.jpg',
-        tablet: '../assets/product-xx59-headphones/tablet/image-gallery-2.jpg',
-        desktop: '../assets/product-xx59-headphones/desktop/image-gallery-2.jpg'
-      },
-      third: {
-        mobile: '../assets/product-xx59-headphones/mobile/image-gallery-3.jpg',
-        tablet: '../assets/product-xx59-headphones/tablet/image-gallery-3.jpg',
-        desktop: '../assets/product-xx59-headphones/desktop/image-gallery-3.jpg'
-      }
+      first: XX59Gallery1,
+      second: XX59Gallery2,
+      third: XX59Gallery3
     },
     others: [
       {
@@ -145,11 +138,7 @@ export const data = [
       {
         slug: 'zx9-speaker',
         name: 'ZX9 Speaker',
-        image: {
-          mobile: '../assets/shared/mobile/image-zx9-speaker.jpg',
-          tablet: '../assets/shared/tablet/image-zx9-speaker.jpg',
-          desktop: '../assets/shared/desktop/image-zx9-speaker.jpg'
-        }
+        image: ZX9Img
       }
     ]
   },
@@ -185,30 +174,9 @@ export const data = [
       }
     ],
     gallery: {
-      first: {
-        mobile:
-          '../assets/product-xx99-mark-one-headphones/mobile/image-gallery-1.jpg',
-        tablet:
-          '../assets/product-xx99-mark-one-headphones/tablet/image-gallery-1.jpg',
-        desktop:
-          '../assets/product-xx99-mark-one-headphones/desktop/image-gallery-1.jpg'
-      },
-      second: {
-        mobile:
-          '../assets/product-xx99-mark-one-headphones/mobile/image-gallery-2.jpg',
-        tablet:
-          '../assets/product-xx99-mark-one-headphones/tablet/image-gallery-2.jpg',
-        desktop:
-          '../assets/product-xx99-mark-one-headphones/desktop/image-gallery-2.jpg'
-      },
-      third: {
-        mobile:
-          '../assets/product-xx99-mark-one-headphones/mobile/image-gallery-3.jpg',
-        tablet:
-          '../assets/product-xx99-mark-one-headphones/tablet/image-gallery-3.jpg',
-        desktop:
-          '../assets/product-xx99-mark-one-headphones/desktop/image-gallery-3.jpg'
-      }
+      first: XX99MIGallery1,
+      second: XX99MIGallery2,
+      third: XX99MIGallery3
     },
     others: [
       {
@@ -264,30 +232,9 @@ export const data = [
       }
     ],
     gallery: {
-      first: {
-        mobile:
-          '../assets/product-xx99-mark-two-headphones/mobile/image-gallery-1.jpg',
-        tablet:
-          '../assets/product-xx99-mark-two-headphones/tablet/image-gallery-1.jpg',
-        desktop:
-          '../assets/product-xx99-mark-two-headphones/desktop/image-gallery-1.jpg'
-      },
-      second: {
-        mobile:
-          '../assets/product-xx99-mark-two-headphones/mobile/image-gallery-2.jpg',
-        tablet:
-          '../assets/product-xx99-mark-two-headphones/tablet/image-gallery-2.jpg',
-        desktop:
-          '../assets/product-xx99-mark-two-headphones/desktop/image-gallery-2.jpg'
-      },
-      third: {
-        mobile:
-          '../assets/product-xx99-mark-two-headphones/mobile/image-gallery-3.jpg',
-        tablet:
-          '../assets/product-xx99-mark-two-headphones/tablet/image-gallery-3.jpg',
-        desktop:
-          '../assets/product-xx99-mark-two-headphones/desktop/image-gallery-3.jpg'
-      }
+      first: XX99MIIGallery1,
+      second: XX99MIIGallery2,
+      third: XX99MIIGallery3
     },
     others: [
       {
@@ -343,21 +290,9 @@ export const data = [
       }
     ],
     gallery: {
-      first: {
-        mobile: '../assets/product-zx7-speaker/mobile/image-gallery-1.jpg',
-        tablet: '../assets/product-zx7-speaker/tablet/image-gallery-1.jpg',
-        desktop: '../assets/product-zx7-speaker/desktop/image-gallery-1.jpg'
-      },
-      second: {
-        mobile: '../assets/product-zx7-speaker/mobile/image-gallery-2.jpg',
-        tablet: '../assets/product-zx7-speaker/tablet/image-gallery-2.jpg',
-        desktop: '../assets/product-zx7-speaker/desktop/image-gallery-2.jpg'
-      },
-      third: {
-        mobile: '../assets/product-zx7-speaker/mobile/image-gallery-3.jpg',
-        tablet: '../assets/product-zx7-speaker/tablet/image-gallery-3.jpg',
-        desktop: '../assets/product-zx7-speaker/desktop/image-gallery-3.jpg'
-      }
+      first: ZX7Gallery1,
+      second: ZX7Gallery2,
+      third: ZX7Gallery3
     },
     others: [
       {
@@ -413,21 +348,9 @@ export const data = [
       }
     ],
     gallery: {
-      first: {
-        mobile: '../assets/product-zx9-speaker/mobile/image-gallery-1.jpg',
-        tablet: '../assets/product-zx9-speaker/tablet/image-gallery-1.jpg',
-        desktop: '../assets/product-zx9-speaker/desktop/image-gallery-1.jpg'
-      },
-      second: {
-        mobile: '../assets/product-zx9-speaker/mobile/image-gallery-2.jpg',
-        tablet: '../assets/product-zx9-speaker/tablet/image-gallery-2.jpg',
-        desktop: '../assets/product-zx9-speaker/desktop/image-gallery-2.jpg'
-      },
-      third: {
-        mobile: '../assets/product-zx9-speaker/mobile/image-gallery-3.jpg',
-        tablet: '../assets/product-zx9-speaker/tablet/image-gallery-3.jpg',
-        desktop: '../assets/product-zx9-speaker/desktop/image-gallery-3.jpg'
-      }
+      first: ZX9Gallery1,
+      second: ZX9Gallery2,
+      third: ZX9Gallery3
     },
     others: [
       {

@@ -41,11 +41,11 @@ const Hero = () => {
       <Stack
         sx={{
           position: 'absolute',
-          top: '25%',
+          top: { xs: '30%', md: '20%' },
           left: { xs: '0', md: '10%' },
           right: { xs: '0', md: '10%' },
           bottom: { xs: '0', md: '10%' },
-          width: { xs: '100%', md: '50%', lg: '396px' },
+          width: { xs: '100%', md: '30%' },
           height: { xs: '100%', md: '100%', lg: 'auto' },
           paddingX: { xs: 2, md: 4, lg: 8 },
           paddingY: { xs: 2, md: 4, lg: 8 },
@@ -60,14 +60,20 @@ const Hero = () => {
           sx={{
             color: '#ffffff',
             textTransform: 'uppercase',
-            letterSpacing: '4px'
+            letterSpacing: '4px',
+            fontSize: { xs: 12, md: 14 }
           }}
         >
           NEW PRODUCT
         </Typography>
         <Typography
           variant='h4'
-          sx={{ color: '#ffffff', fontWeight: 700, letterSpacing: '2px' }}
+          sx={{
+            color: '#ffffff',
+            fontWeight: 700,
+            letterSpacing: '2px',
+            fontSize: { xs: 24, md: 42 }
+          }}
         >
           XX99 MARK II HEADPHONES
         </Typography>
@@ -76,7 +82,7 @@ const Hero = () => {
           sx={{
             color: '#ffffff',
             marginTop: 2,
-            fontSize: 12
+            fontSize: { xs: 14, md: 16 }
           }}
         >
           Experience natural, lifelike audio and exceptional build quality made

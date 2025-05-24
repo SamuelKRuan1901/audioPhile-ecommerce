@@ -21,7 +21,7 @@ const Footer = () => {
         alignItems: 'center',
         justifyContent: 'center',
         gap: 2,
-        height: { xs: 600, md: 400 },
+        height: 'auto',
         paddingBottom: 4
       }}
     >
@@ -38,7 +38,7 @@ const Footer = () => {
           component='h1'
           color='#ffffff'
           fontWeight={700}
-          sx={{ borderTop: '3px solid #d87d4a', paddingY: 3 }}
+          sx={{ borderTop: '5px solid #d87d4a', paddingY: 3 }}
         >
           audiophile
         </Typography>

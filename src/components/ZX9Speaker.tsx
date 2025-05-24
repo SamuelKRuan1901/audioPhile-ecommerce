@@ -35,7 +35,7 @@ const ZX9Speaker = () => {
         <Typography variant='h5' fontWeight={600}>
           ZX9 SPEAKER
         </Typography>
-        <Typography variant='body1'>
+        <Typography variant='body1' color='#979797' letterSpacing={1}>
           Upgrade to premium speakers that are phenomenally built to deliver
           truly remarkable sound.
         </Typography>

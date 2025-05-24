@@ -28,7 +28,7 @@ const FamousProductsList = () => {
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      gap={{ xs: 8, md: 4 }}
+      gap={{ xs: 12, md: 8 }}
       sx={{
         width: '100%',
         justifyContent: 'center',
