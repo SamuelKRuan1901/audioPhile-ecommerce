@@ -1,5 +1,5 @@
 'use client';
-import { Stack, Typography } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import { usePathname } from 'next/navigation';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -73,7 +73,7 @@ const Footer = () => {
         justifyContent='space-between'
         alignItems='center'
         paddingX={{ xs: 2, sm: 4, md: 8 }}
-        sx={{ paddingY: 2, gap: 2 }}
+        sx={{ paddingY: 2, gap: { xs: 2, sm: 4, md: 8 } }}
       >
         <Typography
           variant='body1'
@@ -81,7 +81,8 @@ const Footer = () => {
           color='#ffffff'
           sx={{
             width: { xs: '100%', md: '50%' },
-            textAlign: { xs: 'center', md: 'start' }
+            textAlign: { xs: 'center', md: 'start' },
+            color: '#979797'
           }}
         >
           Audiophile is an all in one stop to fulfill your audio needs.
@@ -90,33 +91,39 @@ const Footer = () => {
           visit our demo facility - we&apos;re open 7 days a week.
         </Typography>
         <Stack direction='row' gap={2}>
-          <InstagramIcon
-            sx={{
-              color: '#ffffff',
-              cursor: 'pointer',
-              ':hover': { color: '#d87d4a' },
-              transition: 'color 0.3s ease-in-out'
-            }}
-          />
-          <TwitterIcon
-            sx={{
-              color: '#ffffff',
-              cursor: 'pointer',
-              ':hover': { color: '#d87d4a' },
-              transition: 'color 0.3s ease-in-out'
-            }}
-          />
-          <FacebookIcon
-            sx={{
-              color: '#ffffff',
-              cursor: 'pointer',
-              ':hover': { color: '#d87d4a' },
-              transition: 'color 0.3s ease-in-out'
-            }}
-          />
+          <IconButton aria-label='IG'>
+            <InstagramIcon
+              sx={{
+                color: '#ffffff',
+                cursor: 'pointer',
+                ':hover': { color: '#d87d4a' },
+                transition: 'color 0.3s ease-in-out'
+              }}
+            />
+          </IconButton>
+          <IconButton aria-label='TW'>
+            <TwitterIcon
+              sx={{
+                color: '#ffffff',
+                cursor: 'pointer',
+                ':hover': { color: '#d87d4a' },
+                transition: 'color 0.3s ease-in-out'
+              }}
+            />
+          </IconButton>
+          <IconButton aria-label='FB'>
+            <FacebookIcon
+              sx={{
+                color: '#ffffff',
+                cursor: 'pointer',
+                ':hover': { color: '#d87d4a' },
+                transition: 'color 0.3s ease-in-out'
+              }}
+            />
+          </IconButton>
         </Stack>
       </Stack>
-      <Typography variant='body1' component='p' color='#ffffff'>
+      <Typography variant='body1' component='p' color='#979797'>
         Copyright 2021. All Rights Reserved
       </Typography>
     </Stack>

@@ -52,8 +52,9 @@ const CategoryItem = ({
           href={path}
           variant='text'
           sx={{ color: '#d87d4a', width: 200 }}
+          endIcon={<ChevronRightIcon />}
         >
-          Shop <ChevronRightIcon />
+          Shop
         </Button>
       </Stack>
     </Stack>

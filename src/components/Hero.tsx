@@ -96,6 +96,7 @@ const Hero = () => {
             color: '#ffffff',
             width: 200
           }}
+          href='/xx99-mark-one-headphones'
         >
           SEE PRODUCT
         </Button>

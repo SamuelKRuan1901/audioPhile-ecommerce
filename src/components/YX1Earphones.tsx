@@ -12,7 +12,8 @@ const YX1Earphones = () => {
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1'
+        backgroundColor: '#f1f1f1',
+        paddingTop: { xs: 4, md: 0 }
       }}
     >
       <Image
@@ -21,7 +22,7 @@ const YX1Earphones = () => {
         priority
         width={400}
         height={400}
-        className='w-auto h-auto'
+        className='w-auto h-64'
       />
       <Stack
         sx={{

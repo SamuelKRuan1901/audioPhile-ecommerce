@@ -41,7 +41,7 @@ const ProductSinglePage = ({ params }: { params: { slug: string } }) => {
   const Router = useRouter();
   const [slug, setSlug] = useState('');
   const [product, setProduct] = useState<product>({} as product);
-  console.log(product.includes);
+  console.log(slug);
   useEffect(() => {
     const getSlug = async () => {
       const { slug } = await params;

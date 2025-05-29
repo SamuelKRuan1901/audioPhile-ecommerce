@@ -1,10 +1,14 @@
 'use client';
-import { Stack, Typography } from '@mui/material';
+import { IconButton, Stack, Typography } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { usePathname } from 'next/navigation';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from 'react';
+import CartDetail from './CartDetail';
+import Badge, { badgeClasses } from '@mui/material/Badge';
+import { styled } from '@mui/material/styles';
+import Link from 'next/link';
 
 const Header = () => {
   const headerElements = [
@@ -12,9 +16,22 @@ const Header = () => {
     { id: 2, name: 'Headphones', path: '/headphones' },
     { id: 3, name: 'Speakers', path: '/speakers' },
     { id: 4, name: 'Earphones', path: '/earphones' }
+    // { id: 5, name: 'Login / Register', path: '/auth/login' }
   ];
   const [openMenu, setOpenMenu] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
   const path = usePathname();
+  const CartBadge = styled(Badge)`
+    & .${badgeClasses.badge} {
+      top: -12px;
+      right: -6px;
+    }
+  `;
+
+  const handleCloseDynamicComponents = () => {
+    setOpenMenu(false);
+    setOpenCart(false);
+  };
   return (
     <Stack
       direction='row'
@@ -58,7 +75,7 @@ const Header = () => {
           justifyContent: 'center',
           padding: { xs: 4, md: 0 },
           transition: 'left 0.3s ease-in-out',
-          zIndex: 10
+          zIndex: { xs: 20, md: 10 }
         }}
       >
         {openMenu && (
@@ -92,20 +109,40 @@ const Header = () => {
             {item.name}
           </Typography>
         ))}
+        <Link
+          href={'/auth/login'}
+          className={` uppercase text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
+            path === '/auth/login' ? 'text-[#d87d4a]' : 'text-white'
+          }`}
+        >
+          Login / Register
+        </Link>
       </Stack>
-      {openMenu && (
+      {openMenu === true && (
         <div
-          className='w-full h-full bg-slate-800/50 fixed top-0 right-0 z-0'
-          onClick={() => setOpenMenu(false)}
+          className='w-full h-full bg-slate-800/50 fixed top-0 right-0 z-10'
+          onClick={handleCloseDynamicComponents}
         />
       )}
-      <ShoppingCartIcon
-        sx={{
-          color: '#ffffff',
-          cursor: 'pointer',
-          ':hover': { color: '#d87d4a' }
-        }}
-      />
+      {openCart === true && (
+        <div
+          className='w-full h-full bg-slate-800/50 fixed top-0 right-0 z-10'
+          onClick={handleCloseDynamicComponents}
+        />
+      )}
+      <IconButton>
+        <ShoppingCartIcon
+          sx={{
+            color: '#ffffff',
+            cursor: 'pointer',
+            ':hover': { color: '#d87d4a' }
+          }}
+          onClick={() => setOpenCart(!openCart)}
+        />
+        <CartBadge badgeContent={2} color='primary' overlap='circular' />
+      </IconButton>
+
+      {openCart && <CartDetail />}
     </Stack>
   );
 };

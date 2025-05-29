@@ -13,7 +13,8 @@ const AdvanceProduct = () => {
         alignItems: 'center',
         gap: 4,
         marginTop: 4,
-        marginBottom: 12
+        marginBottom: 12,
+        paddingX: { xs: 2, sm: 4, md: 8 }
       }}
       width={'100%'}
     >
