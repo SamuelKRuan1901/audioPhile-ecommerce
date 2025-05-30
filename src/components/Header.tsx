@@ -9,14 +9,15 @@ import CartDetail from './CartDetail';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 
 const Header = () => {
+  const session = useSession();
   const headerElements = [
     { id: 1, name: 'Home', path: '/' },
     { id: 2, name: 'Headphones', path: '/headphones' },
     { id: 3, name: 'Speakers', path: '/speakers' },
     { id: 4, name: 'Earphones', path: '/earphones' }
-    // { id: 5, name: 'Login / Register', path: '/auth/login' }
   ];
   const [openMenu, setOpenMenu] = useState(false);
   const [openCart, setOpenCart] = useState(false);
@@ -109,14 +110,26 @@ const Header = () => {
             {item.name}
           </Typography>
         ))}
-        <Link
-          href={'/auth/login'}
-          className={` uppercase text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
-            path === '/auth/login' ? 'text-[#d87d4a]' : 'text-white'
-          }`}
-        >
-          Login / Register
-        </Link>
+        {session.status === 'authenticated' && (
+          <Link
+            href={'/profile'}
+            className={` uppercase text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
+              path === '/auth/login' ? 'text-[#d87d4a]' : 'text-white'
+            }`}
+          >
+            Profile
+          </Link>
+        )}
+        {session.status === 'unauthenticated' && (
+          <Link
+            href={'/auth/login'}
+            className={` uppercase text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
+              path === '/auth/login' ? 'text-[#d87d4a]' : 'text-white'
+            }`}
+          >
+            Login / Register
+          </Link>
+        )}
       </Stack>
       {openMenu === true && (
         <div

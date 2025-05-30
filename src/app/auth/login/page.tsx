@@ -2,7 +2,7 @@
 import { FormHelperText, Input, InputLabel, Stack } from '@mui/material';
 import { FormControl, Button, Typography } from '@mui/material';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { signIn } from 'next-auth/react';
@@ -16,7 +16,9 @@ const LoginPage = () => {
   const session = useSession();
   const router = useRouter();
 
-  if (session.status === 'authenticated') router.push('/');
+  useEffect(() => {
+    if (session.status === 'authenticated') router.push('/');
+  });
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

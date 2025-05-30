@@ -4,6 +4,8 @@ import './globals.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import Header from '@/components/Header';
 import AuthProvider from '@/context/AuthProvider';
+import { ShopProvider } from '@/context/ShopProvider';
+import { ToastContainer } from 'react-toastify';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -30,9 +32,12 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} relative`}>
         <CssBaseline />
         <AuthProvider>
-          <Header />
-          {children}
+          <ShopProvider>
+            <Header />
+            {children}
+          </ShopProvider>
         </AuthProvider>
+        <ToastContainer />
       </body>
     </html>
   );
