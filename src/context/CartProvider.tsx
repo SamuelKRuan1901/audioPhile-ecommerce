@@ -2,13 +2,16 @@
 import {
   AddProductToCart,
   ClearAll,
+  completeOrder,
   decreaseProductCountInCart,
   getBills,
   increaseProductCountInCart
 } from '@/actions/bill';
 import { BillType } from '@/lib/type';
-import { createContext, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { ShopContext } from './ShopProvider';
 
 interface CartContextProps {
   bills: BillType[];
@@ -28,6 +31,7 @@ interface CartContextProps {
   clearCart: (userId: string) => void;
   increaseProductCount: (productId: string, userId: string) => void;
   decreaseProductCount: (productId: string, userId: string) => void;
+  handleCompleteOrder: (userId: string, billId: string) => void;
 }
 
 export const CartContext = createContext<CartContextProps>(
@@ -38,6 +42,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [bills, setBills] = useState<BillType[]>([] as BillType[]);
   const [isLoading, setIsLoading] = useState(false);
   const [productCount, setProductCount] = useState(0);
+  const Router = useRouter();
+  const { userInfo } = useContext(ShopContext);
 
   const handleAddToCart = async (
     slug: string,
@@ -102,6 +108,18 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     await getBillsInfo(userId);
   };
 
+  const handleCompleteOrder = async (userId: string, billId: string) => {
+    const res = await completeOrder(billId);
+    if (res?.status === 400) toast.error(res?.message as string);
+    toast.success('Order completed successfully');
+    await getBillsInfo(userId);
+    Router.push('/profile');
+  };
+
+  useEffect(() => {
+    if (userInfo._id) getBillsInfo(userInfo._id as string);
+  }, [userInfo._id]);
+
   const values = {
     bills,
     setBills,
@@ -113,7 +131,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     getBillsInfo,
     clearCart,
     increaseProductCount,
-    decreaseProductCount
+    decreaseProductCount,
+    handleCompleteOrder
   };
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
 };

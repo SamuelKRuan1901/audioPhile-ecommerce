@@ -55,6 +55,9 @@ const ProductSinglePage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <>
+      <time className='hidden' suppressHydrationWarning>
+        {new Date().toISOString()}
+      </time>
       {!product && (
         <Stack
           direction={'column'}

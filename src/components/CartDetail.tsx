@@ -6,8 +6,13 @@ import { CartContext } from '@/context/CartProvider';
 import { ShopContext } from '@/context/ShopProvider';
 import { BillType } from '@/lib/type';
 
-const CartDetail = () => {
-  const { getBillsInfo, bills, clearCart } = useContext(CartContext);
+const CartDetail = ({
+  isCheckoutPage = false
+}: {
+  isCheckoutPage?: boolean;
+}) => {
+  const { bills, clearCart, isLoading, handleCompleteOrder } =
+    useContext(CartContext);
   const { userInfo } = useContext(ShopContext);
   const pendingBill = bills.find((bill: BillType) => bill.status === 'pending');
   const total = pendingBill?.products.reduce(
@@ -15,16 +20,12 @@ const CartDetail = () => {
     0
   );
 
-  useEffect(() => {
-    if (userInfo._id) getBillsInfo(userInfo._id as string);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userInfo._id]);
-
   return (
     <Stack
+      position={isCheckoutPage ? 'static' : 'fixed'}
+      border={!isCheckoutPage ? 'none' : '1px solid #d87d4a'}
       sx={{
         backgroundColor: '#ffffff',
-        position: 'fixed',
         right: { xs: 0, sm: 20 },
         top: 20,
         width: { xs: '100%', sm: 400 },
@@ -35,15 +36,29 @@ const CartDetail = () => {
       }}
     >
       <Stack direction={'row'} justifyContent={'space-between'}>
-        <Typography
-          variant='h5'
-          color='initial'
-          fontWeight={600}
-          letterSpacing={1}
-        >
-          Cart {`(${pendingBill?.products ? pendingBill?.products.length : 0})`}
-        </Typography>
-        {pendingBill?.products.length !== 0 && (
+        {isCheckoutPage === true && (
+          <Typography
+            variant='h5'
+            color='initial'
+            fontWeight={600}
+            letterSpacing={1}
+          >
+            Summary
+          </Typography>
+        )}
+        {isCheckoutPage === false && (
+          <Typography
+            variant='h5'
+            color='initial'
+            fontWeight={600}
+            letterSpacing={1}
+          >
+            Cart{' '}
+            {`(${pendingBill?.products ? pendingBill?.products.length : 0})`}
+          </Typography>
+        )}
+
+        {pendingBill && !isCheckoutPage && (
           <Button
             variant='text'
             color='primary'
@@ -69,6 +84,7 @@ const CartDetail = () => {
             price={product.price}
             number={product.quantity}
             image={product.image}
+            isCheckout={isCheckoutPage}
           />
         ))}
       </Stack>
@@ -90,17 +106,95 @@ const CartDetail = () => {
           ${total}
         </Typography>
       </Stack>
-      <Button
-        variant='contained'
-        sx={{
-          fontSize: 12,
-          backgroundColor: '#d87d4a',
-          ':hover': { backgroundColor: '#f1f1f1', color: '#d87d4a' }
-        }}
-        href='/checkout'
-      >
-        Checkout
-      </Button>
+      {pendingBill && !isCheckoutPage && (
+        <Button
+          variant='contained'
+          sx={{
+            fontSize: 12,
+            backgroundColor: '#d87d4a',
+            ':hover': { backgroundColor: '#f1f1f1', color: '#d87d4a' }
+          }}
+          href='/checkout'
+          disabled={pendingBill ? false : true || isLoading}
+        >
+          Checkout
+        </Button>
+      )}
+      {pendingBill && isCheckoutPage && (
+        <Stack gap={2}>
+          <Stack direction={'row'} justifyContent={'space-between'}>
+            <Typography
+              variant='body1'
+              color='#979797'
+              textTransform={'uppercase'}
+              letterSpacing={1}
+            >
+              Shipping
+            </Typography>
+            <Typography
+              variant='body1'
+              color='initial'
+              fontWeight={600}
+              letterSpacing={1}
+            >
+              $50
+            </Typography>
+          </Stack>
+          <Stack direction={'row'} justifyContent={'space-between'}>
+            <Typography
+              variant='body1'
+              color='#979797'
+              textTransform={'uppercase'}
+              letterSpacing={1}
+            >
+              Grand Total
+            </Typography>
+            <Typography
+              variant='body1'
+              color='initial'
+              fontWeight={600}
+              letterSpacing={1}
+            >
+              ${(total as number) + 50}
+            </Typography>
+          </Stack>
+          <Stack direction={'row'} justifyContent={'space-between'}>
+            <Typography
+              variant='body1'
+              color='#979797'
+              textTransform={'uppercase'}
+              letterSpacing={1}
+            >
+              Payment Method
+            </Typography>
+            <Typography
+              variant='body1'
+              color='initial'
+              fontWeight={600}
+              letterSpacing={1}
+            >
+              {pendingBill.paymentMethod}
+            </Typography>
+          </Stack>
+          <Button
+            variant='contained'
+            sx={{
+              fontSize: 12,
+              backgroundColor: '#d87d4a',
+              ':hover': { backgroundColor: '#f1f1f1', color: '#d87d4a' }
+            }}
+            disabled={pendingBill ? false : true}
+            onClick={() =>
+              handleCompleteOrder(
+                userInfo._id as string,
+                pendingBill._id as string
+              )
+            }
+          >
+            Continue and pay
+          </Button>
+        </Stack>
+      )}
     </Stack>
   );
 };

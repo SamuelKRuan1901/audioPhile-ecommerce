@@ -193,3 +193,20 @@ export const decreaseProductCountInCart = async (
     return { status: 400, message: error };
   }
 };
+
+export const completeOrder = async (billId: string) => {
+  await connectDB();
+  try {
+    await Bill.findOneAndUpdate(
+      { _id: billId, status: 'pending' },
+      {
+        $set: {
+          status: 'delivering'
+        }
+      }
+    ).lean();
+    return { status: 200, message: 'Order completed successfully' };
+  } catch (error) {
+    return { status: 400, message: error };
+  }
+};
