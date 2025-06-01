@@ -51,7 +51,6 @@ export const AddProductToCart = async (formData: FormData) => {
           product.quantity += Number(quantity);
         }
       });
-      console.log(pendingBill[0].products);
 
       await Bill.findOneAndUpdate(
         { userId, status: 'pending' },
@@ -114,7 +113,6 @@ export const increaseProductCountInCart = async (
           product.quantity += 1;
         }
       });
-      console.log(pendingBill[0].products);
       await Bill.findOneAndUpdate(
         { userId, status: 'pending' },
         {
@@ -140,20 +138,10 @@ export const decreaseProductCountInCart = async (
     const pendingBill = await Bill.find({ userId, status: 'pending' }).lean();
     if (!pendingBill) return { status: 400, message: 'Bill not found' };
     const products = pendingBill[0].products;
-    if (products.length === 1) {
-      await Bill.findOneAndDelete({
-        userId,
-        status: 'pending'
-      }).lean();
-      return {
-        status: 200,
-        message: 'Product removed from cart successfully'
-      };
-    }
-    const productExists = products.find(
-      (product: ProductType) => product._id.toString() === id
-    );
-    if (productExists) {
+    if (products.length > 1) {
+      const productExists = products.find(
+        (product: ProductType) => product._id.toString() === id
+      );
       if (productExists.quantity === 1) {
         pendingBill[0].products = pendingBill[0].products.filter(
           (product: ProductType) => product._id.toString() !== id
@@ -166,7 +154,6 @@ export const decreaseProductCountInCart = async (
             }
           }
         ).lean();
-
         return {
           status: 200,
           message: 'Product removed from cart successfully'
@@ -177,7 +164,6 @@ export const decreaseProductCountInCart = async (
           product.quantity -= 1;
         }
       });
-      console.log(pendingBill[0].products);
       await Bill.findOneAndUpdate(
         { userId, status: 'pending' },
         {
@@ -186,8 +172,36 @@ export const decreaseProductCountInCart = async (
           }
         }
       ).lean();
-
       return { status: 200, message: 'Product added to cart successfully' };
+    }
+
+    if (products.length === 1 && products[0].quantity > 1) {
+      pendingBill[0].products.find((product: ProductType) => {
+        if (product._id.toString() === id) {
+          product.quantity -= 1;
+        }
+      });
+      await Bill.findOneAndUpdate(
+        { userId, status: 'pending' },
+        {
+          $set: {
+            products: pendingBill[0].products
+          }
+        }
+      ).lean();
+      console.log('decreased 3');
+      return { status: 200, message: 'Product added to cart successfully' };
+    }
+
+    if (products.length === 1 && products[0].quantity === 1) {
+      await Bill.findOneAndDelete({
+        userId,
+        status: 'pending'
+      }).lean();
+      return {
+        status: 200,
+        message: 'Product removed from cart successfully'
+      };
     }
   } catch (error) {
     return { status: 400, message: error };
@@ -201,11 +215,34 @@ export const completeOrder = async (billId: string) => {
       { _id: billId, status: 'pending' },
       {
         $set: {
-          status: 'delivering'
+          status: 'confirmed'
         }
       }
     ).lean();
     return { status: 200, message: 'Order completed successfully' };
+  } catch (error) {
+    return { status: 400, message: error };
+  }
+};
+
+export const cancelOrder = async (billId: string) => {
+  await connectDB();
+  try {
+    await Bill.findOneAndDelete({ _id: billId, status: 'confirmed' }).lean();
+    return { status: 200, message: 'Order cancelled successfully' };
+  } catch (error) {
+    return { status: 400, message: error };
+  }
+};
+
+export const receivedOrder = async (billId: string) => {
+  await connectDB();
+  try {
+    await Bill.findOneAndUpdate(
+      { _id: billId, status: 'delivered' },
+      { $set: { status: 'completed' } }
+    ).lean();
+    return { status: 200, message: 'Order received successfully' };
   } catch (error) {
     return { status: 400, message: error };
   }

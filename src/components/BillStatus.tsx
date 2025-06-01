@@ -1,12 +1,12 @@
 import { CartContext } from '@/context/CartProvider';
-import { Stack, Typography } from '@mui/material';
+import { Stack, Typography, Button } from '@mui/material';
 import Image from 'next/image';
 import React, { useContext } from 'react';
 
 const BillStatus = () => {
-  const { bills } = useContext(CartContext);
+  const { bills, handleCancelOrder, handleReceivedOrder } =
+    useContext(CartContext);
   const solvingBills = bills.filter((bill) => bill.status !== 'completed');
-  console.log(solvingBills);
   return (
     <Stack
       direction={'column'}
@@ -52,7 +52,7 @@ const BillStatus = () => {
               <Stack direction={'row'}>
                 <Typography
                   variant='body1'
-                  sx={{ padding: 2, fontWeight: 600 }}
+                  sx={{ padding: 2, color: '#d87d4a' }}
                 >
                   Status
                 </Typography>
@@ -63,6 +63,34 @@ const BillStatus = () => {
                   {bill.status}
                 </Typography>
               </Stack>
+              {bill.status === 'confirmed' && (
+                <>
+                  <Typography
+                    variant='body1'
+                    color='error'
+                    textAlign={'center'}
+                    fontSize={12}
+                  >
+                    you may cancel the order in the next 24 hours
+                  </Typography>
+                  <Button
+                    variant='text'
+                    color='primary'
+                    onClick={() => handleCancelOrder(bill._id)}
+                  >
+                    Cancel order
+                  </Button>
+                </>
+              )}
+              {bill.status === 'delivered' && (
+                <Button
+                  variant='text'
+                  color='primary'
+                  onClick={() => handleReceivedOrder(bill._id)}
+                >
+                  Received
+                </Button>
+              )}
             </Stack>
           ))}
         </>

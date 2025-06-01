@@ -1,17 +1,20 @@
 'use client';
 import {
   AddProductToCart,
+  cancelOrder,
   ClearAll,
   completeOrder,
   decreaseProductCountInCart,
   getBills,
-  increaseProductCountInCart
+  increaseProductCountInCart,
+  receivedOrder
 } from '@/actions/bill';
 import { BillType } from '@/lib/type';
 import { useRouter } from 'next/navigation';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { ShopContext } from './ShopProvider';
+import { useSession } from 'next-auth/react';
 
 interface CartContextProps {
   bills: BillType[];
@@ -32,6 +35,8 @@ interface CartContextProps {
   increaseProductCount: (productId: string, userId: string) => void;
   decreaseProductCount: (productId: string, userId: string) => void;
   handleCompleteOrder: (userId: string, billId: string) => void;
+  handleReceivedOrder: (billId: string) => void;
+  handleCancelOrder: (billId: string) => void;
 }
 
 export const CartContext = createContext<CartContextProps>(
@@ -43,6 +48,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [productCount, setProductCount] = useState(0);
   const Router = useRouter();
+  const session = useSession();
   const { userInfo } = useContext(ShopContext);
 
   const handleAddToCart = async (
@@ -56,6 +62,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     if (productCount < 1) {
       toast.error('Please select at least one product');
       setIsLoading(false);
+      return;
+    }
+    if (session.status !== 'authenticated') {
+      toast.error('Please login first');
+      setIsLoading(false);
+      Router.push('/auth/login');
       return;
     }
     const formData = new FormData();
@@ -116,6 +128,20 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     Router.push('/profile');
   };
 
+  const handleCancelOrder = async (billId: string) => {
+    const res = await cancelOrder(billId);
+    if (res?.status === 400) toast.error(res?.message as string);
+    toast.success('Order cancelled successfully');
+    await getBillsInfo(userInfo._id as string);
+  };
+
+  const handleReceivedOrder = async (billId: string) => {
+    const res = await receivedOrder(billId);
+    if (res?.status === 400) toast.error(res?.message as string);
+    toast.success('Order received successfully');
+    await getBillsInfo(userInfo._id as string);
+  };
+
   useEffect(() => {
     if (userInfo._id) getBillsInfo(userInfo._id as string);
   }, [userInfo._id]);
@@ -132,7 +158,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     clearCart,
     increaseProductCount,
     decreaseProductCount,
-    handleCompleteOrder
+    handleCompleteOrder,
+    handleCancelOrder,
+    handleReceivedOrder
   };
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
 };

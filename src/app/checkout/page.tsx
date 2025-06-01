@@ -2,21 +2,22 @@
 import CartDetail from '@/components/CartDetail';
 import CheckoutForm from '@/components/CheckoutForm';
 import Footer from '@/components/Footer';
+import GoBackButton from '@/components/GoBackButton';
 import PageTitle from '@/components/PageTitle';
+import { CartContext } from '@/context/CartProvider';
 import { Button, Stack, Typography } from '@mui/material';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useContext } from 'react';
 
 const CheckoutPage = () => {
-  const Router = useRouter();
-  const session = useSession();
+  const { bills } = useContext(CartContext);
+  const pendingBills = bills.filter((bill) => bill.status === 'pending');
 
   return (
     <>
       <time className='hidden' suppressHydrationWarning>
         {new Date().toISOString()}
       </time>
-      {session?.status === 'loading' && (
+      {pendingBills.length === 0 && (
         <Stack
           direction={'column'}
           sx={{
@@ -24,13 +25,27 @@ const CheckoutPage = () => {
             minHeight: '100vh',
             gap: 4,
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'start'
           }}
         >
-          <Typography variant='h4'>Loading...</Typography>
+          <PageTitle title='Checkout' />
+          <GoBackButton />
+          <Typography variant='h4'>No pending bills</Typography>
+          <Button
+            variant='contained'
+            sx={{
+              backgroundColor: '#d87d4a',
+              width: 200,
+              ':hover': { backgroundColor: '#f1f1f1', color: '#d87d4a' }
+            }}
+            href='/'
+          >
+            Go Shopping
+          </Button>
+          <Footer />
         </Stack>
       )}
-      {session?.status === 'authenticated' && (
+      {pendingBills.length > 0 && (
         <Stack
           direction={'column'}
           sx={{
@@ -42,38 +57,14 @@ const CheckoutPage = () => {
           }}
         >
           <PageTitle title='Checkout' />
-          <Stack
-            sx={{
-              width: '100%',
-              justifyContent: 'start',
-              alignItems: 'start',
-              paddingX: { xs: 2, lg: 10, xl: 35 }
-            }}
-          >
-            <Button
-              variant='text'
-              sx={{
-                color: '#000000',
-                fontWeight: 400,
-                borderRadius: 0,
-                ':hover': {
-                  color: '#d87d4a',
-                  borderBottom: '1px solid #d87d4a',
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer'
-                }
-              }}
-              onClick={() => Router.back()}
-            >
-              Go Back
-            </Button>
-          </Stack>
+          <GoBackButton />
           <Stack
             direction={{ xs: 'column-reverse', md: 'row' }}
-            alignItems={'start'}
+            alignItems={{ xs: 'center', md: 'start' }}
             justifyContent={'center'}
             gap={8}
             width={'100%'}
+            padding={4}
           >
             <Stack sx={{ width: { xs: '100%', md: '50%' } }} gap={4}>
               <Typography
@@ -84,7 +75,7 @@ const CheckoutPage = () => {
               </Typography>
               <CheckoutForm />
             </Stack>
-            <Stack>
+            <Stack sx={{ width: { xs: '100%', md: '50%' } }}>
               <CartDetail isCheckoutPage={true} />
             </Stack>
           </Stack>

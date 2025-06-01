@@ -26,14 +26,6 @@ const ProfileForm = () => {
     userInfo?.zipCode ? userInfo?.zipCode : ''
   );
 
-  console.log({
-    username,
-    phone,
-    address,
-    city,
-    country,
-    zipcode
-  });
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData();

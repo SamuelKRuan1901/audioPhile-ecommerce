@@ -1,16 +1,14 @@
-'use client';
 import About from '@/components/About';
 import FamousProductsList from '@/components/FamousProductsList';
 import Footer from '@/components/Footer';
 import PageTitle from '@/components/PageTitle';
 import { data } from '@/lib/data';
-import { Button, Stack, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { Stack, Typography } from '@mui/material';
 import ProductDetail from '@/components/ProductDetail';
 import ProductAdvices from '@/components/ProductAdvices';
 import Gallery from '@/components/Gallery';
 import Recommendations from '@/components/Recommendations';
+import GoBackButton from '@/components/GoBackButton';
 
 interface product {
   id: number;
@@ -37,21 +35,16 @@ interface product {
   }[];
 }
 
-const ProductSinglePage = ({ params }: { params: { slug: string } }) => {
-  const Router = useRouter();
-  const [slug, setSlug] = useState('');
-  const [product, setProduct] = useState<product>({} as product);
+interface Params {
+  slug: string;
+}
 
-  useEffect(() => {
-    const getSlug = async () => {
-      const { slug } = await params;
-      setSlug(slug);
-      setProduct(
-        data.find((product) => product.slug === slug) as unknown as product
-      );
-    };
-    getSlug();
-  }, [params, setSlug, setProduct]);
+const ProductSinglePage = async ({ params }: { params: Promise<Params> }) => {
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+  const product = data.find(
+    (product) => product.slug === slug
+  ) as unknown as product;
 
   return (
     <>
@@ -84,32 +77,7 @@ const ProductSinglePage = ({ params }: { params: { slug: string } }) => {
           }}
         >
           <PageTitle title='' />
-          <Stack
-            sx={{
-              width: '100%',
-              justifyContent: 'start',
-              alignItems: 'start',
-              paddingX: { xs: 2, lg: 10, xl: 35 }
-            }}
-          >
-            <Button
-              variant='text'
-              sx={{
-                color: '#000000',
-                fontWeight: 400,
-                borderRadius: 0,
-                ':hover': {
-                  color: '#d87d4a',
-                  borderBottom: '1px solid #d87d4a',
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer'
-                }
-              }}
-              onClick={() => Router.back()}
-            >
-              Go Back
-            </Button>
-          </Stack>
+          <GoBackButton />
           <Stack
             direction={'column'}
             sx={{

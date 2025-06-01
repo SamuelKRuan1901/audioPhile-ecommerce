@@ -8,12 +8,12 @@ const YX1Earphones = () => {
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      width={{ xs: '100%', md: 800 }}
+      width={{ xs: '100%', md: '90%', lg: '80%' }}
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1',
-        paddingTop: { xs: 4, md: 0 }
+        backgroundColor: '#faf3f0',
+        gap: { xs: 4, md: 8 }
       }}
     >
       <Image

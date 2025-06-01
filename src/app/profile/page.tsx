@@ -2,6 +2,7 @@
 import BillStatus from '@/components/BillStatus';
 import ChangePasswordForm from '@/components/ChangePasswordForm';
 import Footer from '@/components/Footer';
+import GoBackButton from '@/components/GoBackButton';
 import OrderHistory from '@/components/OrderHistory';
 import PageTitle from '@/components/PageTitle';
 import ProfileForm from '@/components/ProfileForm';
@@ -49,32 +50,7 @@ const ProfilePage = () => {
           }}
         >
           <PageTitle title='Profile' />
-          <Stack
-            sx={{
-              width: '100%',
-              justifyContent: 'start',
-              alignItems: 'start',
-              paddingX: { xs: 2, lg: 10, xl: 35 }
-            }}
-          >
-            <Button
-              variant='text'
-              sx={{
-                color: '#000000',
-                fontWeight: 400,
-                borderRadius: 0,
-                ':hover': {
-                  color: '#d87d4a',
-                  borderBottom: '1px solid #d87d4a',
-                  backgroundColor: 'transparent',
-                  cursor: 'pointer'
-                }
-              }}
-              onClick={() => Router.back()}
-            >
-              Go Back
-            </Button>
-          </Stack>
+          <GoBackButton />
           <Stack
             direction={{ xs: 'column-reverse', md: 'row' }}
             gap={8}

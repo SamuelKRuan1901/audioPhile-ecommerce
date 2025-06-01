@@ -13,17 +13,19 @@ const OrderHistory = () => {
       width={'100%'}
       border={'1px solid #d87d4a'}
       borderRadius={2}
+      padding={2}
     >
       {completedBills.length !== 0 && (
         <>
           {completedBills.map((bill) => (
             <Stack
+              direction={'column'}
               key={bill._id}
               width={'100%'}
               border={'1px solid #d87d4a'}
               borderRadius={2}
             >
-              <Stack direction={'column'}>
+              <Stack direction={'column'} gap={2}>
                 {bill.products.map((product) => (
                   <Stack
                     key={product._id}

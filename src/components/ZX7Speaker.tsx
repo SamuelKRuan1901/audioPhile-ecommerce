@@ -8,18 +8,20 @@ const ZX7Speaker = () => {
   return (
     <Stack
       direction={{ xs: 'column-reverse', md: 'row' }}
-      width={{ xs: '100%', md: 800 }}
+      width={{ xs: '100%', md: '90%', lg: '80%' }}
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1'
+        backgroundColor: '#faf3f0',
+        px: { xs: 2, md: 4 },
+        gap: { xs: 0, md: 8 }
       }}
     >
       <Stack
         sx={{
           justifyContent: 'center',
           alignItems: 'center',
-          width: '100%',
+          width: 300,
           padding: 4
         }}
       >

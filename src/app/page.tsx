@@ -13,7 +13,8 @@ export default function Home() {
         widows: '100vw',
         height: '100vh',
         justifyContent: 'start',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#000000'
       }}
     >
       <Hero />

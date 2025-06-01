@@ -7,11 +7,13 @@ const ZX9Speaker = () => {
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
-      width={{ xs: '100%', md: 800 }}
+      width={{ xs: '100%', md: '90%', lg: '80%' }}
       sx={{
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1'
+        backgroundColor: '#faf3f0',
+        px: { xs: 2, md: 4 },
+        gap: { xs: 0, md: 8 }
       }}
     >
       <Image
@@ -35,7 +37,12 @@ const ZX9Speaker = () => {
         <Typography variant='h5' fontWeight={600}>
           ZX9 SPEAKER
         </Typography>
-        <Typography variant='body1' color='#979797' letterSpacing={1}>
+        <Typography
+          variant='body1'
+          color='#979797'
+          letterSpacing={1}
+          width={300}
+        >
           Upgrade to premium speakers that are phenomenally built to deliver
           truly remarkable sound.
         </Typography>

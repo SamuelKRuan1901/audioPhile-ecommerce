@@ -50,8 +50,13 @@ const CategoryItem = ({
         </Typography>
         <Button
           href={path}
-          variant='text'
-          sx={{ color: '#d87d4a', width: 200 }}
+          variant='outlined'
+          sx={{
+            color: '#d87d4a',
+            width: 200,
+            border: '1px solid #d87d4a',
+            ':hover': { color: '#f1f1f1', backgroundColor: '#d87d4a' }
+          }}
           endIcon={<ChevronRightIcon />}
         >
           Shop

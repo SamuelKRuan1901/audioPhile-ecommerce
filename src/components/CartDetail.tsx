@@ -1,7 +1,7 @@
 'use client';
 import { Stack, Typography, Button } from '@mui/material';
 import CartItem from './CartItem';
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { CartContext } from '@/context/CartProvider';
 import { ShopContext } from '@/context/ShopProvider';
 import { BillType } from '@/lib/type';
@@ -164,6 +164,7 @@ const CartDetail = ({
               color='#979797'
               textTransform={'uppercase'}
               letterSpacing={1}
+              fontSize={{ xs: 12, md: 14 }}
             >
               Payment Method
             </Typography>
@@ -172,6 +173,7 @@ const CartDetail = ({
               color='initial'
               fontWeight={600}
               letterSpacing={1}
+              fontSize={{ xs: 12, md: 14 }}
             >
               {pendingBill.paymentMethod}
             </Typography>
