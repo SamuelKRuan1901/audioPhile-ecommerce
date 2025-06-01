@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import AuthProvider from '@/context/AuthProvider';
 import { ShopProvider } from '@/context/ShopProvider';
 import { ToastContainer } from 'react-toastify';
+import { CartProvider } from '@/context/CartProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -28,13 +29,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} relative`}>
         <CssBaseline />
         <AuthProvider>
           <ShopProvider>
-            <Header />
-            {children}
+            <CartProvider>
+              <Header />
+              {children}
+            </CartProvider>
           </ShopProvider>
         </AuthProvider>
         <ToastContainer />

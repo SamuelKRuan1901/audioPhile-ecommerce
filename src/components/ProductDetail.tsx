@@ -1,24 +1,32 @@
 'use client';
 import { Button, ButtonGroup, Input, Stack, Typography } from '@mui/material';
-import { useState } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { ShopContext } from '@/context/ShopProvider';
+import { CartContext } from '@/context/CartProvider';
 
 const ProductDetail = ({
   name,
   isNew,
   image,
   price,
-  description
+  description,
+  slug
 }: {
   name: string;
   isNew: boolean;
   image: string;
   price: number;
   description: string;
+  slug: string;
 }) => {
-  const [productCount, setProductCount] = useState(0);
+  const { userInfo } = useContext(ShopContext);
+  const { handleAddToCart, isLoading, productCount, setProductCount } =
+    useContext(CartContext);
+  const productName = name?.split(' ');
+
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}
@@ -106,8 +114,18 @@ const ProductDetail = ({
               backgroundColor: '#d87d4a',
               ':hover': { backgroundColor: '#f1f1f1', color: '#d87d4a' }
             }}
+            disabled={isLoading}
+            onClick={() =>
+              handleAddToCart(
+                slug,
+                productName,
+                price,
+                productCount,
+                userInfo?._id as string
+              )
+            }
           >
-            Add To Cart
+            {isLoading ? 'Adding...' : 'Add To Cart'}
           </Button>
         </Stack>
       </Stack>

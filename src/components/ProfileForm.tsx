@@ -45,8 +45,9 @@ const ProfileForm = () => {
     formData.append('country', country);
     formData.append('zipCode', zipcode);
 
-    const data = await updateUserInfo(formData);
-    if (data === null) return toast.error('Something went wrong! Try again.');
+    const res = await updateUserInfo(formData);
+    if (res.status !== 200)
+      return toast.error('Something went wrong! Try again.');
     toast.success('Profile updated successfully.');
     await getUserInfo(userInfo?.email as string);
   };
@@ -59,10 +60,7 @@ const ProfileForm = () => {
     setZipcode(userInfo?.zipCode ? userInfo?.zipCode : '');
   }, [userInfo]);
   return (
-    <form
-      className='flex flex-col gap-4 md:w-96 w-screen px-8'
-      onSubmit={handleUpdate}
-    >
+    <form className='flex flex-col gap-4 w-full' onSubmit={handleUpdate}>
       <label htmlFor='email' className='text-[#d87d4a] font-semibold'>
         Email Address
       </label>

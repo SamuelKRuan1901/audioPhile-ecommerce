@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
 import { useSession } from 'next-auth/react';
 import { ChangePassword } from '@/actions/user';
+import Typography from '@mui/material/Typography';
 
 const ChangePasswordForm = () => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -33,9 +34,21 @@ const ChangePasswordForm = () => {
 
   return (
     <form
-      className='w-full flex flex-col gap-2'
+      className='w-full flex flex-col gap-2 border border-[#d87d4a] p-4 rounded-md'
       onSubmit={handleChangePassword}
     >
+      <Typography
+        variant='body1'
+        sx={{
+          fontWeight: 600,
+          marginY: 2,
+          fontSize: { xs: 16, md: 20 },
+          textAlign: 'center',
+          color: '#d87d4a'
+        }}
+      >
+        Change Your Password
+      </Typography>
       <TextField
         required
         id='current-password'

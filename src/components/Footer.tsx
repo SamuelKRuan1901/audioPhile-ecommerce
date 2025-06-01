@@ -22,7 +22,8 @@ const Footer = () => {
         justifyContent: 'center',
         gap: 2,
         height: 'auto',
-        paddingBottom: 4
+        paddingBottom: 4,
+        marginTop: 20
       }}
     >
       <Stack

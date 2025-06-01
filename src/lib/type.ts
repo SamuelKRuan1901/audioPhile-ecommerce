@@ -11,3 +11,22 @@ export interface UserInfo {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface BillType {
+  _id: string;
+  userId: string;
+  products: ProductType[];
+  status: string;
+  paymentMethod: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProductType {
+  _id: string;
+  slug: string;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+}

@@ -1,15 +1,32 @@
+'use client';
 import { Stack, Typography, Button } from '@mui/material';
 import CartItem from './CartItem';
-import thumbnail from '@/assets/cart/image-xx59-headphones.jpg';
+import { useEffect, useContext } from 'react';
+import { CartContext } from '@/context/CartProvider';
+import { ShopContext } from '@/context/ShopProvider';
+import { BillType } from '@/lib/type';
 
 const CartDetail = () => {
+  const { getBillsInfo, bills, clearCart } = useContext(CartContext);
+  const { userInfo } = useContext(ShopContext);
+  const pendingBill = bills.find((bill: BillType) => bill.status === 'pending');
+  const total = pendingBill?.products.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
+  useEffect(() => {
+    if (userInfo._id) getBillsInfo(userInfo._id as string);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userInfo._id]);
+
   return (
     <Stack
       sx={{
         backgroundColor: '#ffffff',
         position: 'fixed',
         right: { xs: 0, sm: 20 },
-        top: 80,
+        top: 20,
         width: { xs: '100%', sm: 400 },
         borderRadius: 2,
         padding: 2,
@@ -24,36 +41,38 @@ const CartDetail = () => {
           fontWeight={600}
           letterSpacing={1}
         >
-          Cart {`(0)`}
+          Cart {`(${pendingBill?.products ? pendingBill?.products.length : 0})`}
         </Typography>
-        <Button
-          variant='text'
-          color='primary'
-          sx={{ fontSize: 12, ':hover': { color: '#d87d4a' } }}
-        >
-          Remove all
-        </Button>
+        {pendingBill?.products.length !== 0 && (
+          <Button
+            variant='text'
+            color='primary'
+            sx={{ fontSize: 12, ':hover': { color: '#d87d4a' } }}
+            onClick={() => clearCart(userInfo._id as string)}
+          >
+            Remove all
+          </Button>
+        )}
       </Stack>
       <Stack
         direction={'column'}
         justifyContent={'space-between'}
         overflow={'auto'}
-        gap={2}
       >
-        <CartItem
-          name={'product name'}
-          price={399}
-          number={1}
-          image={thumbnail as unknown as string}
-        />
-        <CartItem
-          name={'product name'}
-          price={399}
-          number={1}
-          image={thumbnail as unknown as string}
-        />
+        {pendingBill?.products.map((product) => (
+          <CartItem
+            key={product._id}
+            userId={userInfo._id as string}
+            id={product._id}
+            slug={product.slug}
+            name={product.name}
+            price={product.price}
+            number={product.quantity}
+            image={product.image}
+          />
+        ))}
       </Stack>
-      <Stack direction={'row'} justifyContent={'space-between'} marginY={2}>
+      <Stack direction={'row'} justifyContent={'space-between'}>
         <Typography
           variant='body1'
           color='#979797'
@@ -68,7 +87,7 @@ const CartDetail = () => {
           fontWeight={600}
           letterSpacing={1}
         >
-          $1,698
+          ${total}
         </Typography>
       </Stack>
       <Button

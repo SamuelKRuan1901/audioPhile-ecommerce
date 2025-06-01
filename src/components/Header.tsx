@@ -4,15 +4,19 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { usePathname } from 'next/navigation';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import CartDetail from './CartDetail';
 import Badge, { badgeClasses } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import { CartContext } from '@/context/CartProvider';
+import { BillType } from '@/lib/type';
 
 const Header = () => {
   const session = useSession();
+  const { bills } = useContext(CartContext);
+  const pendingBill = bills.find((bill: BillType) => bill.status === 'pending');
   const headerElements = [
     { id: 1, name: 'Home', path: '/' },
     { id: 2, name: 'Headphones', path: '/headphones' },
@@ -29,10 +33,21 @@ const Header = () => {
     }
   `;
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Until the component is mounted on the client, render a fallback
+  if (!mounted) {
+    return null; // alternatively, return a spinner or a skeleton.
+  }
+
   const handleCloseDynamicComponents = () => {
     setOpenMenu(false);
     setOpenCart(false);
   };
+
   return (
     <Stack
       direction='row'
@@ -113,7 +128,7 @@ const Header = () => {
         {session.status === 'authenticated' && (
           <Link
             href={'/profile'}
-            className={` uppercase text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
+            className={` uppercase max-md:text-xs text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
               path === '/auth/login' ? 'text-[#d87d4a]' : 'text-white'
             }`}
           >
@@ -123,7 +138,7 @@ const Header = () => {
         {session.status === 'unauthenticated' && (
           <Link
             href={'/auth/login'}
-            className={` uppercase text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
+            className={` uppercase max-md:text-xs text-sm hover:text-[#d87d4a] transition-colors duration-300 ease-in-out ${
               path === '/auth/login' ? 'text-[#d87d4a]' : 'text-white'
             }`}
           >
@@ -152,7 +167,11 @@ const Header = () => {
           }}
           onClick={() => setOpenCart(!openCart)}
         />
-        <CartBadge badgeContent={2} color='primary' overlap='circular' />
+        <CartBadge
+          badgeContent={pendingBill ? pendingBill?.products.length : 0}
+          color='primary'
+          overlap='circular'
+        />
       </IconButton>
 
       {openCart && <CartDetail />}

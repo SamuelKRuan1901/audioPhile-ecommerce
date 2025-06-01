@@ -11,7 +11,6 @@ const Recommendations = ({
     image: string;
   }[];
 }) => {
-  console.group('othersProducts', othersProducts);
   return (
     <Stack
       direction={{ xs: 'column', md: 'row' }}

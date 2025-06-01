@@ -23,7 +23,7 @@ const About = () => {
         sx={{
           justifyContent: 'center',
           alignItems: 'center',
-          width: { xs: '100%', md: '40%' },
+          width: { xs: '100%', md: '500px' },
           padding: 4,
           textAlign: { xs: 'center', md: 'start' }
         }}
@@ -53,8 +53,9 @@ const About = () => {
         src={AboutImg}
         alt={'about image'}
         priority
-        width={600}
-        height={600}
+        width={300}
+        height={300}
+        className='w-auto h-auto'
       />
     </Stack>
   );

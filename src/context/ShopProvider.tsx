@@ -3,6 +3,7 @@ import { getUser } from '@/actions/user';
 import { UserInfo } from '@/lib/type';
 import { useSession } from 'next-auth/react';
 import { createContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 interface ShopContextProps {
   slug: string;
@@ -24,6 +25,7 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   const getUserInfo = async (email: string) => {
     try {
       const user = await getUser(email);
+      if (!user) toast.error('Something went wrong! Try again.');
       setUserInfo(user);
     } catch (error) {
       throw error;
@@ -31,8 +33,10 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    getUserInfo(session.data?.user?.email as string);
+    if (session?.data?.user?.email)
+      getUserInfo(session?.data?.user?.email as string);
   }, [session]);
+
   const values = {
     slug,
     setSlug,

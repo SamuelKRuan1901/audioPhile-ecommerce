@@ -5,8 +5,9 @@ const billSchema = new Schema(
     userId: { type: String, required: true },
     products: [
       {
+        slug: { type: String, required: true },
+        name: { type: String, required: true },
         image: { type: String, required: true },
-        productId: { type: String, required: true },
         price: { type: Number, required: true },
         quantity: { type: Number, required: true }
       }
@@ -17,6 +18,6 @@ const billSchema = new Schema(
   { timestamps: true }
 );
 
-export const User =
+export const Bill =
   (mongoose.models && mongoose.models.Bill) ||
-  mongoose.model('User', billSchema);
+  mongoose.model('Bill', billSchema);

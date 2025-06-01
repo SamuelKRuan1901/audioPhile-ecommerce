@@ -1,24 +1,33 @@
-import { Button, ButtonGroup, Input, Stack, Typography } from '@mui/material';
+import { Button, ButtonGroup, Stack, Typography } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useState } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { CartContext } from '@/context/CartProvider';
 
 const CartItem = ({
+  userId,
+  id,
+  slug,
   name,
   price,
   number,
   image,
   isCheckout = false
 }: {
+  userId: string;
+  id: string;
+  slug: string;
   name: string;
   price: number;
   number: number;
   image: string;
   isCheckout?: boolean;
 }) => {
-  const [productCount, setProductCount] = useState(number);
-
+  const { increaseProductCount, decreaseProductCount } =
+    useContext(CartContext);
+  const Router = useRouter();
   return (
     <Stack
       direction={'row'}
@@ -26,29 +35,33 @@ const CartItem = ({
       sx={{
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'start'
+        justifyContent: 'space-between',
+        padding: 2,
+        ':hover': { cursor: 'pointer', backgroundColor: '#f1f1f1' }
       }}
     >
-      <Image
-        alt='product thumbnail'
-        src={image}
-        width={50}
-        height={50}
-        className='w-auto h-auto rounded-md border border-gray-300'
-        priority
-      />
-      <Stack direction={'column'} justifyContent={'space-between'}>
-        <Typography
-          variant='body1'
-          color='initial'
-          fontWeight={600}
-          letterSpacing={1}
-        >
-          {name}
-        </Typography>
-        <Typography variant='body1' color='initial' sx={{ color: '#979797' }}>
-          $ {price}
-        </Typography>
+      <Stack direction={'row'} gap={2} onClick={() => Router.push(`/${slug}`)}>
+        <Image
+          alt='product thumbnail'
+          src={image}
+          width={40}
+          height={40}
+          className='w-auto h-auto rounded-md border border-gray-300'
+          priority
+        />
+        <Stack direction={'column'} justifyContent={'center'}>
+          <Typography
+            variant='body1'
+            color='initial'
+            fontWeight={600}
+            letterSpacing={1}
+          >
+            {name}
+          </Typography>
+          <Typography variant='body1' color='initial' sx={{ color: '#979797' }}>
+            $ {price}
+          </Typography>
+        </Stack>
       </Stack>
       {isCheckout ? (
         <Typography variant='body1' color='initial'>
@@ -67,28 +80,17 @@ const CartItem = ({
         >
           <Button
             variant='outlined'
-            onClick={() => setProductCount(productCount - 1)}
-            disabled={productCount === 0}
+            onClick={() => decreaseProductCount(id, userId)}
           >
             <RemoveIcon sx={{ fontSize: 12 }} />
           </Button>
-          <Input
-            size='small'
-            type='number'
-            onChange={(e) => setProductCount(parseInt(e.target.value))}
-            value={number}
-            inputProps={{
-              min: 0,
-              max: 100,
-              style: { textAlign: 'center', fontSize: 12 }
-            }}
-            sx={{ width: 30, paddingX: 1 }}
-          />
+          <Typography variant='body1' color='initial' width={40} align='center'>
+            {number}
+          </Typography>
 
           <Button
             variant='outlined'
-            onClick={() => setProductCount(productCount + 1)}
-            disabled={productCount === 100}
+            onClick={() => increaseProductCount(id, userId)}
           >
             <AddIcon sx={{ fontSize: 12 }} />
           </Button>

@@ -23,7 +23,7 @@ export const getUser = async (email: string) => {
   await connectDB();
   try {
     const user = await User.findOne({ email }).lean();
-    if (!user) return null;
+    if (!user) return { status: 400, message: 'User not found' };
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
     throw error;
@@ -45,8 +45,8 @@ export const updateUserInfo = async (FormData: FormData) => {
       { email },
       { name, number, address, city, country, zipCode }
     ).lean();
-    if (!user) return null;
-    return JSON.parse(JSON.stringify(user));
+    if (!user) return { status: 400, message: 'User not found' };
+    return { status: 200, message: 'User updated successfully' };
   } catch (error) {
     throw error;
   }
