@@ -14,7 +14,7 @@ export default function Home() {
         height: '100vh',
         justifyContent: 'start',
         alignItems: 'center',
-        backgroundColor: '#000000'
+        backgroundColor: 'transparent'
       }}
     >
       <Hero />

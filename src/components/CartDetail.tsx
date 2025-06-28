@@ -24,6 +24,7 @@ const CartDetail = ({
     <Stack
       position={isCheckoutPage ? 'static' : 'fixed'}
       border={!isCheckoutPage ? 'none' : '1px solid #d87d4a'}
+      zIndex={isCheckoutPage ? 0 : 50}
       sx={{
         backgroundColor: '#ffffff',
         right: { xs: 0, sm: 20 },
@@ -31,8 +32,7 @@ const CartDetail = ({
         width: { xs: '100%', sm: 400 },
         borderRadius: 2,
         padding: 2,
-        gap: 2,
-        zIndex: 10
+        gap: 2
       }}
     >
       <Stack direction={'row'} justifyContent={'space-between'}>

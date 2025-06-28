@@ -2,7 +2,7 @@
 import { getUser } from '@/actions/user';
 import { UserInfo } from '@/lib/type';
 import { useSession } from 'next-auth/react';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 interface ShopContextProps {
@@ -21,9 +21,12 @@ export const ShopContext = createContext<ShopContextProps>(
 export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
   const [slug, setSlug] = useState<string>('');
   const [userInfo, setUserInfo] = useState({} as UserInfo);
-  const session = useSession();
+  const memoSession = useCallback(useSession, []);
+  const session = memoSession();
+  const email = session?.data?.user?.email as string;
   const getUserInfo = async (email: string) => {
     try {
+      if (!email) return;
       const user = await getUser(email);
       if (!user) toast.error('Something went wrong! Try again.');
       setUserInfo(user);
@@ -32,10 +35,10 @@ export const ShopProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const memoCallback = useCallback(getUserInfo, []);
   useEffect(() => {
-    if (session?.data?.user?.email)
-      getUserInfo(session?.data?.user?.email as string);
-  }, [session]);
+    getUserInfo(email);
+  }, [email, memoCallback]);
 
   const values = {
     slug,

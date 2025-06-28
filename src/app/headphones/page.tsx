@@ -1,13 +1,18 @@
+'use client';
 import About from '@/components/About';
 import FamousProductsList from '@/components/FamousProductsList';
 import Footer from '@/components/Footer';
 import PageTitle from '@/components/PageTitle';
 import { Stack } from '@mui/material';
 import { data } from '@/lib/data';
-import ProductItem from '@/components/ProductItem';
+import dynamic from 'next/dynamic';
 
 const HeadphonesPage = () => {
   const headphones = data.filter((item) => item.category === 'headphones');
+  const ProductItem = dynamic(() => import('@/components/ProductItem'), {
+    ssr: false,
+    loading: () => <p>Loading...</p>
+  });
   return (
     <Stack
       direction={'column'}

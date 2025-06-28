@@ -9,7 +9,8 @@ const Hero = () => {
     <Stack
       sx={{
         justifyContent: 'start',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'transparent'
       }}
     >
       <Stack sx={{ position: 'relative', width: '100%' }}>
